@@ -91,7 +91,7 @@ let rec chizu_display hougaku chizu_houkou =
     let houkou = List.assoc first chizu_houkou
     in (print_endline ( first ^ ":" ^ houkou);
         chizu_display rest chizu_houkou)
-  with Not_found -> print_endline ""
+  with Not_found -> chizu_display rest chizu_houkou
 
 (* miru : string ->　state_t -> chizu_list(string*(stirng*string)) -> unit *)
 let miru item state chizu_list =
@@ -123,8 +123,9 @@ let dispatch input state dousa_list chizu_list = match input with
 (* basho_message : state_t -> unit *)
 let basho_message state =
   print_endline ("あなたは" ^ state.place ^ "にいる。");
-  if state.place = "西の森の遺跡"
-    then (Iseki.iseki_main state; state.place <- "草原";)
+  if state.place = "西の森の遺跡" && not(List.mem "西の森の宝" state.items)
+    then (Iseki.iseki_main state; state.place <- "西の森";
+          state.items <- "西の森の宝":: state.items;)
   else (print_string "ここには";
   match !(List.assoc state.place state.place_state) with
       [] -> print_endline "何もない。"

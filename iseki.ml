@@ -73,11 +73,17 @@ let tojiru item state =
 	        print_endline ("あなたは扉を閉めた。")
     | Closed -> print_endline ("扉はすでに閉まっている。")
 
+(* 目的：「見る」を処理する *)
+(* miru : string ->　state_t -> chizu_list(string*(stirng*string)) -> unit *)
+let miru item state chizu_list =
+  print_endline ( "ここで地図を見ることはできない。" )
+
 
 (* 目的：入力文に従って動作を行う *)
 (* dispatch : Syntax.t -> state_t -> dousa_list -> chizu_list -> unit *)
 let dispatch input state dousa_list chizu_list = match input with
     Idousuru (houkou) -> idou state houkou chizu_list
+  | Miru (chizu) -> miru chizu state chizu_list
   | Tadoushi (mokutekigo, tadoushi) ->
       let lst = List.assoc mokutekigo dousa_list in
 		(* この目的語に使える動作のリストを得る *)
@@ -105,8 +111,8 @@ let basho_message state =
 		     print_string "と";
 		     print_string item)
 		  rest;
-	print_endline "がある。"
-
+  print_endline "がある。"
+  
 (* 目的：ゲームのメインループ *)
 (* loop : state_t -> ... -> 'a *)
 let rec loop state dousa_list chizu_list
