@@ -78,10 +78,11 @@ let tojiru item state =
 	        print_endline ("あなたは扉を閉めた。")
     | Closed -> print_endline ("扉はすでに閉まっている。")
 
-(* 目的：「見る」を処理する *)
-(* miru : string -> state_t -> unit *)
+
+(* 目的：地図を表示する *)
 let hougaku = ["東";"西";"南";"北"]
 
+(* chizu_display : string -> (string*string) list -> unit *)
 let rec chizu_display hougaku chizu_houkou =
   match hougaku with
   [] -> print_endline ("につながっている。")
@@ -92,6 +93,7 @@ let rec chizu_display hougaku chizu_houkou =
         chizu_display rest chizu_houkou)
   with Not_found -> print_endline ""
 
+(* miru : string ->　state_t -> chizu_list(string*(stirng*string)) -> unit *)
 let miru item state chizu_list =
   if item = "地図"
     then chizu_display hougaku (List.assoc state.place chizu_list)
