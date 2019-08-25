@@ -129,7 +129,9 @@ let basho_message state =
           print_endline ("あなたは" ^ state.place ^ "にいる。");)
   else if state.place = "地下の遺跡" && not(List.mem "灯台の鍵" state.items)
   then (let flag = Toudai.toudai_main state in 
-        if flag then state.items <- "灯台の鍵":: state.items;
+        if flag then (state.items <- "指輪":: state.items;
+                      print_endline ("あなたは指輪を手に入れた。");)
+        else print_endline ("灯台では特に何も起こらなかった。");
         state.place <- "灯台";
         print_endline ("あなたは" ^ state.place ^ "にいる。");)
   else (print_string "ここには";

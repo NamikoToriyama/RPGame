@@ -14,20 +14,21 @@ type heya_t = {
   mutable heya2 : bool;
   mutable heya3 : bool;
   mutable heya4 : bool;
+  mutable cnt   : int;
 }
-
-(* 目的：部屋を通ったか確認する *)
-(* loop : heya_t -> ... -> bool *)
+(* 目的：ゲームのメインループ *)
+(* loop : state_t -> ... -> 'a *)
 let check_room heya_state = 
   if not(heya_state.heya1) then false
   else if not(heya_state.heya2) then false
   else if not(heya_state.heya3) then false
   else if not(heya_state.heya4) then false
-  else true;
+  else if heya_state.cnt=5 then true
+  else false
 
   
 (* 目的：ゲームのメインループ *)
-(* loop : state_t -> ... -> bool *)
+(* loop : state_t -> ... -> 'a *)
 let rec loop state heya_state dousa_list chizu_list
        shuryo_basho shuryo_items shuryo_messages =
   (* 部屋を通ったか確認する *)
@@ -35,6 +36,8 @@ let rec loop state heya_state dousa_list chizu_list
   else if state.place = "部屋２" then heya_state.heya2 <- true
   else if state.place = "部屋３" then heya_state.heya3 <- true
   else if state.place = "部屋４" then heya_state.heya4 <- true;
+  heya_state.cnt <- (heya_state.cnt + 1);
+  (* print_int (heya_state.cnt); *)
 
   if state.place = shuryo_basho &&	(* 終了場所にいて *)
      List.fold_right (fun item b -> List.mem item state.items && b)
@@ -51,7 +54,7 @@ let rec loop state heya_state dousa_list chizu_list
       | Not_found -> print_endline "えっ？"
       | Parsing.Parse_error -> print_endline "ええっ？");
     print_newline ();
-    loop state heya_state dousa_list chizu_list shuryo_basho shuryo_items shuryo_messages;);
+    loop state heya_state dousa_list chizu_list shuryo_basho shuryo_items shuryo_messages;)
 
 (* ゲームの開始 *)
 let toudai_main state = try
@@ -73,6 +76,7 @@ let toudai_main state = try
     heya2 = false;
     heya3 = false;
     heya4 = false;
+    cnt = 0;
   } in
   (* アクションの対応表 *)
   let action_list = [
@@ -91,6 +95,6 @@ let toudai_main state = try
   let flag = loop init_state init_heya dousa_list chizu_list
        shuryo_basho shuryo_items shuryo_messages in
     if flag then true
-    else false;
+    else false
 with Sys_error (str) ->
   failwith "toudai.txt が見つかりません。"
