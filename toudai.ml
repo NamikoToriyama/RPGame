@@ -23,7 +23,7 @@ let check_room heya_state =
   else if not(heya_state.heya2) then false
   else if not(heya_state.heya3) then false
   else if not(heya_state.heya4) then false
-  else if heya_state.cnt=5 then true
+  else if heya_state.cnt = 7 then true  (* アクション数7が最小 *)
   else false
 
   
