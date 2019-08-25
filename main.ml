@@ -128,7 +128,7 @@ let basho_message state =
           state.items <- "西の森の宝":: state.items;
           print_endline ("あなたは" ^ state.place ^ "にいる。");)
   else if state.place = "地下の遺跡" && not(List.mem "灯台の鍵" state.items)
-  then (let flag = Toudai.iseki_main state in 
+  then (let flag = Toudai.toudai_main state in 
         if flag then state.items <- "灯台の鍵":: state.items;
         state.place <- "灯台";
         print_endline ("あなたは" ^ state.place ^ "にいる。");)
