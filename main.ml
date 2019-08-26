@@ -134,6 +134,10 @@ let basho_message state =
         else print_endline ("灯台では特に何も起こらなかった。");
         state.place <- "灯台";
         print_endline ("あなたは" ^ state.place ^ "にいる。");)
+  else if state.place = "山裏の遺跡" && not(List.mem "山裏の宝" state.items)
+    then (Yamaura.yamaura_main state; state.place <- "家の前";
+        state.items <- "山裏の宝":: state.items;
+        print_endline ("あなたは" ^ state.place ^ "にいる。");)
   else (print_string "ここには";
   match !(List.assoc state.place state.place_state) with
       [] -> print_endline "何もない。"
