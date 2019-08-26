@@ -57,6 +57,19 @@ let hiraku item state =
   let r = List.assoc state.place state.place_state in
   if not (List.mem item !r)
     then print_endline ("ここに" ^ item ^ "はありません。")
+  else if item = "教科書" 
+    then (
+      print_endline ("第一古代ルル語");
+      print_endline ("●●○　○●○○●　●○○●　○●●○　○○●●");
+      print_endline ("最初の4つは目を開いて唱える。");
+      print_endline ("最後の1つは目を閉じて唱える。");
+      print_endline ("");
+      print_endline ("第三古代ルル語");
+      print_endline ("●○で始まるような全ての文字列のみを文として含む言語。");
+      print_endline ("");
+      print_endline ("第四十七古代ルル語");
+      print_endline ("最後に必ず○●で終わる言語");
+    )
   else match state.door_state with
       Locked -> if List.mem "鍵" state.items
 	        then (state.door_state <- Open;
