@@ -34,7 +34,7 @@ let idou state houkou chizu_list =
   else try
     let new_place = List.assoc houkou (List.assoc state.place chizu_list) in
     state.place <- new_place
-  with Not_found -> print_endline "そこには行かれません。"
+  with Not_found -> print_endline "そこには行けません。"
  
 (* 以下、動作を処理する関数群 *)
 
@@ -68,7 +68,9 @@ let oku item state =
 (* hiraku : string -> state_t -> unit *)
 let hiraku item state =
   let r = List.assoc state.place state.place_state in
-  if not (List.mem item !r)
+  if List.mem "教科書" state.items
+    then  print_text item
+  else if not (List.mem item !r)
     then print_endline ("ここに" ^ item ^ "はありません。")
   else if item = "教科書" 
     then print_text item
