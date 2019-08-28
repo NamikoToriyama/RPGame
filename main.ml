@@ -13,6 +13,19 @@ type state_t = {
   mutable hp : int;				(* ヒットポイント（不使用） *)
 }
 
+(* 目的：教科書をプリントする *)
+(* print_text : string -> unit *)
+let print_text item = print_endline ("第一古代ルル語");
+      print_endline ("●●○　○●○○●　●○○●　○●●○　○○●●");
+      print_endline ("最初の4つは目を開いて唱える。");
+      print_endline ("最後の1つは目を閉じて唱える。");
+      print_endline ("");
+      print_endline ("第三古代ルル語");
+      print_endline ("●○で始まるような全ての文字列のみを文として含む言語。");
+      print_endline ("");
+      print_endline ("第四十七古代ルル語");
+      print_endline ("最後に必ず○●で終わる言語")
+
 (* 目的：移動コマンドを処理する *)
 (* idou : state_t -> string -> chizu_list -> unit *)
 let idou state houkou chizu_list =
@@ -58,18 +71,7 @@ let hiraku item state =
   if not (List.mem item !r)
     then print_endline ("ここに" ^ item ^ "はありません。")
   else if item = "教科書" 
-    then (
-      print_endline ("第一古代ルル語");
-      print_endline ("●●○　○●○○●　●○○●　○●●○　○○●●");
-      print_endline ("最初の4つは目を開いて唱える。");
-      print_endline ("最後の1つは目を閉じて唱える。");
-      print_endline ("");
-      print_endline ("第三古代ルル語");
-      print_endline ("●○で始まるような全ての文字列のみを文として含む言語。");
-      print_endline ("");
-      print_endline ("第四十七古代ルル語");
-      print_endline ("最後に必ず○●で終わる言語");
-    )
+    then print_text item
   else match state.door_state with
       Locked -> if List.mem "鍵" state.items
 	        then (state.door_state <- Open;
