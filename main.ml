@@ -140,25 +140,26 @@ let dispatch input state dousa_list chizu_list = match input with
 (* basho_message : state_t -> unit *)
 let basho_message state =
   print_endline ("あなたは" ^ state.place ^ "にいる。");
-  if state.place = "西の森の遺跡" && not(List.mem "西の森の宝" state.items)
-    then (Iseki.iseki_main state; state.place <- "西の森";
-          state.items <- "西の森の宝":: state.items;
+  if List.mem "宝" state.items then(
+    if state.place = "西の森の遺跡" && not(List.mem "西の森の宝" state.items)
+      then (Iseki.iseki_main state; state.place <- "西の森";
+            state.items <- "西の森の宝":: state.items;
+            print_endline ("あなたは" ^ state.place ^ "にいる。");)
+    else if state.place = "地下の遺跡" && not(List.mem "指輪" state.items)
+    then (let flag = Toudai.toudai_main state in 
+          if flag then (state.items <- "指輪":: state.items;
+                        print_endline ("あなたは指輪を手に入れた。");)
+          else print_endline ("灯台では特に何も起こらなかった。");
+          state.place <- "灯台";
           print_endline ("あなたは" ^ state.place ^ "にいる。");)
-  else if state.place = "地下の遺跡" && not(List.mem "指輪" state.items)
-  then (let flag = Toudai.toudai_main state in 
-        if flag then (state.items <- "指輪":: state.items;
-                      print_endline ("あなたは指輪を手に入れた。");)
-        else print_endline ("灯台では特に何も起こらなかった。");
-        state.place <- "灯台";
-        print_endline ("あなたは" ^ state.place ^ "にいる。");)
-  else if state.place = "山裏の遺跡" && not(List.mem "山裏の宝" state.items)
-    then (Yamaura.yamaura_main state; state.place <- "家の前";
-        state.items <- "山裏の宝":: state.items;
-        print_endline ("あなたは" ^ state.place ^ "にいる。");)
-  else if state.place = "建設現場" && not(List.mem "ハマンの宝" state.items)
-    then (Haman.haman_main state; state.place <- "ハマンの町";
-      state.items <- "ハマンの宝":: state.items;
-      print_endline ("あなたは" ^ state.place ^ "にいる。");)
+    else if state.place = "山裏の遺跡" && not(List.mem "山裏の宝" state.items)
+      then (Yamaura.yamaura_main state; state.place <- "家の前";
+          state.items <- "山裏の宝":: state.items;
+          print_endline ("あなたは" ^ state.place ^ "にいる。");)
+    else if state.place = "建設現場" && not(List.mem "ハマンの宝" state.items)
+      then (Haman.haman_main state; state.place <- "ハマンの町";
+        state.items <- "ハマンの宝":: state.items;
+        print_endline ("あなたは" ^ state.place ^ "にいる。");))
   else (print_string "ここには";
   match !(List.assoc state.place state.place_state) with
       [] -> print_endline "何もない。"

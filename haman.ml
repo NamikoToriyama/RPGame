@@ -8,8 +8,6 @@ type door_state_t = Open | Closed
 (* ゲームの状態（世界）を表す型 *)
 type state_t = Iseki.state_t
 
-
-  
 (* 目的：ゲームのメインループ *)
 (* loop : state_t -> ... -> 'a *)
 let rec loop state dousa_list chizu_list
