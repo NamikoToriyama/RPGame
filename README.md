@@ -7,5 +7,6 @@
 でプログラムを実行する。
 
 ## その他
-[地図](https://github.com/NamikoToriyama/RPGame/blob/master/doc/map.md)\n
+[地図](https://github.com/NamikoToriyama/RPGame/blob/master/doc/map.md)
+
 [ヒント](https://github.com/NamikoToriyama/RPGame/blob/master/doc/hint.md)
