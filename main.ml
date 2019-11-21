@@ -13,6 +13,8 @@ type state_t = {
   mutable hp : int;				(* ヒットポイント（不使用） *)
 }
 
+(* TODO : 教科書を読むを対応 *)
+
 (* 目的：教科書をプリントする *)
 (* print_text : string -> unit *)
 let print_text item = print_endline ("第一古代ルル語");
@@ -95,6 +97,10 @@ let tojiru item state =
 	        print_endline ("あなたは扉を閉めた。")
     | Closed -> print_endline ("扉はすでに閉まっている。")
 
+(* 目的：「読む」を処理する *)
+(* tojiru : string -> state_t -> unit *)
+let yomu item state =
+  if item = "教科書" then hiraku item state
 
 (* 目的：地図を表示する *)
 let hougaku = ["東";"西";"南";"北"]
@@ -209,7 +215,7 @@ let _ = try
   } in
   (* アクションの対応表 *)
   let action_list = [
-    ("取る", toru); ("置く", oku); ("開く", hiraku); ("閉じる", tojiru);
+    ("取る", toru); ("置く", oku); ("開く", hiraku); ("閉じる", tojiru); ("読む", yomu);
   ] in
   (* 動作 *)
   let dousa_list = extract_dousa_list world action_list message in

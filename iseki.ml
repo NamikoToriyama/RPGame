@@ -78,6 +78,11 @@ let tojiru item state =
 let miru item state chizu_list =
   print_endline ( "ここで地図を見ることはできない。" )
 
+  (* 目的：「読む」を処理する *)
+(* tojiru : string -> state_t -> unit *)
+let yomu item state =
+  if item = "教科書" then hiraku item state
+
 
 (* 目的：入力文に従って動作を行う *)
 (* dispatch : Syntax.t -> state_t -> dousa_list -> chizu_list -> unit *)
@@ -153,8 +158,8 @@ let iseki_main state = try
   } in
   (* アクションの対応表 *)
   let action_list = [
-    ("取る", toru); ("置く", oku); ("開く", hiraku); ("閉じる", tojiru); 
-  ] in
+    ("取る", toru); ("置く", oku); ("開く", hiraku); ("閉じる", tojiru); ("読む", yomu);
+    ] in
   (* 動作 *)
   let dousa_list = extract_dousa_list world action_list message in
   (* 地図 *)
